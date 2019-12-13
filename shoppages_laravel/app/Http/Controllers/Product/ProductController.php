@@ -125,36 +125,33 @@ class ProductController extends Controller
                 //'rememberToken'=>request()->_token
             ];
     $prodcutname = request()->product_name;
-    //return $prodcutname;
+
 
     $toupload = [  
         'product_id'          =>request()->product_id,
         'file'                =>request()->file,
     ];
 
-        //$input = request()->all();
-            //echo $data;
+
         DB::table('product')->insert($input);
 
         
 
         $fileName = Str::random(20).'.'.$request->file->extension();
-        //return  $fileName;
-        //return 142;
+
         $request->file->move(public_path('uploads'), $fileName);
-        //return 144;
+
         $product_id = DB::table('product')->select('product_id')->where('product_name','=', $prodcutname)->value('product_id');
-        //return 146;
-        //return $product_id;
+
         
         $inputDB = [
             'product_id'            =>  $product_id,
             'product_photo_name'    =>  $fileName
         ];
         DB::table('photo')->insert($inputDB);
-        //dd($res);
+
         return redirect()->route('product');
-        //return $this->fileupload($toupload);
+
         
     }
 /*

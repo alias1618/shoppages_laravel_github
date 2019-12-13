@@ -59,15 +59,21 @@ class LoginController extends Controller
             'user_account'  => 'required|min:4',
             'user_password' => 'required'
         ]);
-
+            
         if ($validator->fails()){
             return redirect('login')
                             ->withErrors($validator)
                             ->withInput();
         }
+/*
         if (!empty($user = DB::table('users')
+        ->where('user_account', '=', $type_account)
+        ->first())){
+*/
+
+        if ($user = DB::table('users')
             ->where('user_account', '=', $type_account)
-            ->first())){
+            ->first()){
 
             if(Hash::check($type_password, $user->user_password)){
                 echo "success";
@@ -86,9 +92,11 @@ class LoginController extends Controller
                 }
         }
         //return back()
+        /*
         return redirect('login')
             ->withErrors(['fail'=>'Email or password is wrong!'])
             ->withInput();
+        */
         //['fail'=>'Email or password is wrong!']
 
 

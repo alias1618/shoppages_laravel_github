@@ -38,7 +38,7 @@ Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/error', function (){
     return view('/error');
 });
-/*
+
 Auth::routes();
 */
 // 登入、登出
@@ -117,4 +117,14 @@ Route::get('index', [
 Route::get('index', [
     'as'  => 'index',
     'uses' => 'Customer\CustomerController@showindex'
+]);
+
+Route::get('detail/{product_id}', [
+    'as'  => 'detail',
+    'uses' => 'Customer\CustomerController@showdetail'
+]);
+
+Route::post('cart/{product_id}', [
+    'as'  => 'cart',
+    'uses' => 'Customer\CustomerController@putincart'
 ]);

@@ -39,6 +39,7 @@
                                             <td>{{ $object->product_describe }}</td>
                                             <td><img src="{{ asset('uploads/'.$object->product_photo_name)}}" width=15%/></td>
                                             <td><a href= "{{ route('toedit_prodcut',['product_id' => $object->product_id]) }}">{{ $object->product_id }}</a></td>
+                                               
                                         </tr>
                                         @endforeach
                                         {{-- @endif --}}
