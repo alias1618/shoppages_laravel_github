@@ -7,14 +7,22 @@
     <title>Document</title>
 </head>
 <body>
-    <form method="POST" action="{{ route('cart', $product_id) }}">
+    <form method="POST" action="{{ route('cart', $product_id, 'buynumber') }}">
+        {{ csrf_field() }}
     @foreach ($product as $object)
     <img src="{{ asset('uploads/'.$object->product_photo_name)}}" width=10%//>
 {{-- <img src="{{ asset('uploads/'.$object->product_photo_name)}}" width=15%/> --}}
     {{ $object->product_name }}
     {{ $object->product_price }}
     <input id="product_id" type="hidden" name="product_id" value="{{ $object->product_id }}">
+    <select name="buynumber">
+        @foreach ($max_buynumber as $item)            
+            <option value="{{ $item }}">{{ $item }}</option>
+        @endforeach
+    </select>
+    
     <input type=submit value=購買>
     @endforeach
+    </form>
 </body>
 </html>

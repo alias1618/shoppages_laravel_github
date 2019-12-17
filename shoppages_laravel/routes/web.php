@@ -124,7 +124,7 @@ Route::get('detail/{product_id}', [
     'uses' => 'Customer\CustomerController@showdetail'
 ]);
 
-Route::post('cart/{product_id}', [
+Route::post('cart/{product_id}/{buynumber}', [
     'as'  => 'cart',
     'uses' => 'Customer\CustomerController@putincart'
 ]);
