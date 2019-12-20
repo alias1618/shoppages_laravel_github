@@ -7,7 +7,7 @@
     <title>Document</title>
 </head>
 <body>
-    <form method="POST" action="{{ route('cart', $product_id, 'buynumber') }}">
+    <form method="POST" action="{{ route('cart') }}">
         {{ csrf_field() }}
     @foreach ($product as $object)
     <img src="{{ asset('uploads/'.$object->product_photo_name)}}" width=10%//>
@@ -15,9 +15,9 @@
     {{ $object->product_name }}
     {{ $object->product_price }}
     <input id="product_id" type="hidden" name="product_id" value="{{ $object->product_id }}">
-    <select name="buynumber">
-        @foreach ($max_buynumber as $item)            
-            <option value="{{ $item }}">{{ $item }}</option>
+    <select name="buynumber" id="buynumber">
+        @foreach ($max_buynumber as $buynumber)            
+            <option value="{{ $buynumber }}">{{ $buynumber }}</option>
         @endforeach
     </select>
     
