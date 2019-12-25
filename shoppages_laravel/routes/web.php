@@ -114,7 +114,7 @@ Route::get('index', [
     'user' => 'Customer\CustomerController@showindex'
 ]);
 */
-Route::get('index', [
+Route::any('index', [
     'as'  => 'index',
     'uses' => 'Customer\CustomerController@showindex'
 ]);

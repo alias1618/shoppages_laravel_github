@@ -16,6 +16,7 @@ use Eloquent;
 use App\Flight;
 //use App\Http\Controllers\Customer\Session;
 use Session;
+use Storage;
 
 class CustomerController extends Controller
 {
@@ -78,18 +79,52 @@ class CustomerController extends Controller
                         ->get()
                         //->toArray();
                         ;
-        $product_array = (array)$product; 
-        $product_array["buynumber"] = $buynumber;
-        //Session::put('cart', $product_array);
+        
+        $room = json_decode($product, true);
+        $rooms =array();
+        $rooms = array_push($rooms, $room);
+
+        $product_json = json_encode($product, JSON_UNESCAPED_UNICODE); 
+        $product_array = $product;
+        
+        Storage::put('product',  $rooms); 
 
 
-        $product_json = json_encode($product_array, JSON_UNESCAPED_UNICODE);
-        Session::put('cart', $product_json);
-        //Session::get('cart');
+
+        Session::push('product_array', $product);
+        Session::push('buynumber', $buynumber);
+        //$files =   Storage::allFiles($dir);
+        //Storage::delete('product');               
+        //Session::push('product_array', $product);                
+        //$product_array = $product->toarray();
+        //Session::push('product_array', $product_array);
+        //Session::flush();
+        //$product_json = json_encode($product, JSON_UNESCAPED_UNICODE);
+        //Session::put('product_json', $product_json);
+        //Session::pull('key', 'default');
+        //$buynumbers = array("buynumber" => $buynumber); 
+        Session::put('cart', $product);
+        Session::put('buynumbers', array($buynumber));
         return  View('shop/cart')
-            ->with('product_json', $product_json)
+                ->with('product_json',$product_json)
+                ->with('product',$product)
+                ;
+        //$product_array["buynumber"] = $buynumber;
+        //Session::put('cart', $product_array);
+        //$products = $product->put('buynumber', $buynumber);
+        //Session::put('cart', $products);
+        
+        //$product_json = json_encode($product_array, JSON_UNESCAPED_UNICODE);
+        //$product_decode = json_decode($product_json, JSON_UNESCAPED_UNICODE);
+        //Session::put('cart', $product_json);
+        //Session::get('cart');
+
+            //->with('product_array', $product_array)
+            //->with('product', $product)
+            //->with('product_json', $product_json)
+            //->with('product_decode', $product_decode)
             //work
-            ;
+            
 /*
         $product = DB::table('product')->where('product_id',48)->get();
         $product[0]->buynumber = 5;

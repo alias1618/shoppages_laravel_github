@@ -77,6 +77,7 @@ class LoginController extends Controller
 
             if(Hash::check($type_password, $user->user_password)){
                 echo "success";
+                return redirect('index');
             }
             else{
                 echo 'still not'.'<br>';
