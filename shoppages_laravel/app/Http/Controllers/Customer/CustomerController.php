@@ -87,9 +87,10 @@ class CustomerController extends Controller
         $product_json = json_encode($product, JSON_UNESCAPED_UNICODE); 
         $product_array = $product;
         
-        Storage::put('product',  $rooms); 
+        //Storage::put('product',  $rooms); 
 
-
+        Session::put('k', '777');
+        Session::put('k1', '777');
 
         Session::push('product_array', $product);
         Session::push('buynumber', $buynumber);
@@ -103,11 +104,14 @@ class CustomerController extends Controller
         //Session::put('product_json', $product_json);
         //Session::pull('key', 'default');
         //$buynumbers = array("buynumber" => $buynumber); 
+        //$test = '9999';
+        //session::put('test001','9999');
         Session::put('cart', $product);
         Session::put('buynumbers', array($buynumber));
         return  View('shop/cart')
                 ->with('product_json',$product_json)
                 ->with('product',$product)
+                //->with('test',$test)
                 ;
         //$product_array["buynumber"] = $buynumber;
         //Session::put('cart', $product_array);
@@ -241,5 +245,55 @@ class CustomerController extends Controller
                 //->with('product_name',$product_name)
                 //->with('cart_session',$cart_session)
                 
+    }
+    public function deletecart(Request $request){
+
+        //$k = Input::get('key_01');
+        $k = $request->key_01;
+        $k1 = Input::get('key_02');
+        $id = Input::get('id');
+        Session::pull('product_array');
+
+        Session::put('k', $k);
+        Session::put('k1', '9999');
+        //unset($product_array[$k]);
+        //Session::flush();
+        //session::forget('product_array');
+        //Session::push('product_array', $product_array);
+
+        //$test = '888888';
+        //unset($test);
+/*
+        session::put('test001','888888');
+        $test001 = session::get('test001');
+        unset($test001);
+        if  (empty($test001)){
+            session::put('test001',$test001);
+        }
+*/        
+/*
+        foreach ($product_array as $key => $array){
+            foreach($array as $key1 => $value) {
+                //if($k == $key || $k1 == $key1){
+                if($id ==   ($array[$key1]->product_id)){
+                    unset($product_array[$key1]);
+
+                    //unset($product_array[$k][$k1]);   not working
+                    //Session::pull('product_array',$product_array);
+                    Session::flush();
+                    Session::push('product_array', $product_array);
+                }
+            }
+        }
+*/
+
+        //Session::flush();
+        //Session::push('product_array', $array);
+        return  View('shop/cart')
+            //->with('k',$k)
+            //->with('k1',$k1)
+            //->with('test',$test)
+        
+        ;
     }
 }

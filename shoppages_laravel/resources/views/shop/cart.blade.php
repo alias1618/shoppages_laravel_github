@@ -9,7 +9,7 @@
 <body>
     <button type="button" class="btn btn-default" onclick="window.location='{{ route('index')}}'">index</button>
 {{-- dd(Session::get('cart')) --}}
-
+{{--  
     @foreach (Session::get('cart') as $item)
     {{ $item->product_id }}
     {{ $item->product_name }}
@@ -20,21 +20,36 @@
     @foreach (Session::get('buynumbers') as $buynumber)
     {{ $buynumber }}
     @endforeach
-    
+--}}    
     {{-- var_dump(Session::get('product_array'))  --}}
-
-    @foreach (Session::get('product_array') as $key => $array)
-        @foreach($array as $key1 => $value) 
-        <li> 商品id   {{ $array[$key1]->product_id }}     </li>
-        <li> 商品名稱   {{ $key }}{{ $array[$key1]->product_name }}   </li>
-        <li> 商品價格   {{ $array[$key1]->product_price }}  </li>
+    
+    @if(Session::has('product_array'))
+        @foreach (Session::get('product_array') as $key => $array)
+            @foreach($array as $key1 => $value) 
+                <li>    key:{{ $key }}key1:{{ $key1 }}商品id:{{ $array[$key1]->product_id }}     </li>
+                <li>    key:{{ $key }}key1:{{ $key1 }}商品名稱:{{ $array[$key1]->product_name }}   </li>
+                <li>    key:{{ $key }}key1:{{ $key1 }}商品價格:{{ $array[$key1]->product_price }}  </li>
+                <input type=button value=delete  onclick="window.location='{{ route('product_delete')}}'">
+                <input type=button value="{{ $key }}" name="key_01" id="key_01">
+                <input type=button value="{{ $key1 }}" name="key_02" id="key_02">
+                <input type=button value="{{ $array[$key1]->product_id }}" name=id >
+            @endforeach
         @endforeach
-    @endforeach
+    @endif
 
-
-    @foreach(Session::get('buynumber') as $buynumber)
-        購買數量{{ $buynumber }}
+{{ var_dump(Session::get('product_array')) }}
+k{{ var_dump(Session::get('k')) }}
+k1{{ var_dump(Session::get('k1')) }}
+{{--  
+@if (Session::has('test001'))
+    {{ Session::get('test001') }}
+@endif    
+--}}
+{{--  
+    @foreach(Session::get('buynumber') as $key => $buynumber)
+        key:{{ $key }}購買數量:{{ $buynumber }}
     @endforeach
+--}}
 {{--  
         @foreach (Storage::get('product') as $product))
             {{ $product->product_id }}

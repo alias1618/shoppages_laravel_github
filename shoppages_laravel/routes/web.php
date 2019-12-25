@@ -128,3 +128,8 @@ Route::post('cart/', [
     'as'  => 'cart',
     'uses' => 'Customer\CustomerController@putincart'
 ]);
+
+Route::get('product_delete/', [
+    'as'  => 'product_delete',
+    'uses' => 'Customer\CustomerController@deletecart'
+]);
