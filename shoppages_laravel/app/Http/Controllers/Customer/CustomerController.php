@@ -68,7 +68,8 @@ class CustomerController extends Controller
 
     public function putincart()
     {
-        
+        $total_number=0;
+        $total_price=0;
         $buynumber = Input::get('buynumber');
         $product_id = Input::get('product_id');
         $product = DB::table('product')
@@ -94,6 +95,19 @@ class CustomerController extends Controller
 
         Session::push('product_array', $product);
         Session::push('buynumber', $buynumber);
+
+        foreach (Session::get('product_array') as $key_01 => $array){
+            foreach($array as $key_02 => $value) {
+                ($product_price=$array[$key_02]->product_price);
+            }
+            foreach(Session::get('buynumber') as $key => $buynumber)
+            if($key_01 == $key){
+                $buynumber;
+            }
+            $subtotal = $product_price*$buynumber;
+            $total_number += $buynumber;
+            $total_price += $subtotal;
+        }
         //$files =   Storage::allFiles($dir);
         //Storage::delete('product');               
         //Session::push('product_array', $product);                
@@ -106,8 +120,8 @@ class CustomerController extends Controller
         //$buynumbers = array("buynumber" => $buynumber); 
         //$test = '9999';
         //session::put('test001','9999');
-        Session::put('cart', $product);
-        Session::put('buynumbers', array($buynumber));
+        //Session::put('cart', $product);
+        //Session::put('buynumbers', array($buynumber));
         return  View('shop/cart')
                 ->with('product_json',$product_json)
                 ->with('product',$product)
@@ -246,16 +260,17 @@ class CustomerController extends Controller
                 //->with('cart_session',$cart_session)
                 
     }
-    public function deletecart(Request $request){
+    public function deletecart($key_01){
 
         //$k = Input::get('key_01');
-        $k = $request->key_01;
-        $k1 = Input::get('key_02');
+        $k = $key_01;
+        //$request->get('key_01');
+        //$k1 = $key_02;
         $id = Input::get('id');
-        Session::pull('product_array');
-
+        Session::forget('product_array.'.$k);
+        Session::forget('buynumber.'.$k);
         Session::put('k', $k);
-        Session::put('k1', '9999');
+        //Session::put('k1', $k1);
         //unset($product_array[$k]);
         //Session::flush();
         //session::forget('product_array');

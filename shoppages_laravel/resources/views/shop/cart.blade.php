@@ -22,34 +22,51 @@
     @endforeach
 --}}    
     {{-- var_dump(Session::get('product_array'))  --}}
-    
-    @if(Session::has('product_array'))
-        @foreach (Session::get('product_array') as $key => $array)
-            @foreach($array as $key1 => $value) 
-                <li>    key:{{ $key }}key1:{{ $key1 }}商品id:{{ $array[$key1]->product_id }}     </li>
-                <li>    key:{{ $key }}key1:{{ $key1 }}商品名稱:{{ $array[$key1]->product_name }}   </li>
-                <li>    key:{{ $key }}key1:{{ $key1 }}商品價格:{{ $array[$key1]->product_price }}  </li>
-                <input type=button value=delete  onclick="window.location='{{ route('product_delete')}}'">
-                <input type=button value="{{ $key }}" name="key_01" id="key_01">
-                <input type=button value="{{ $key1 }}" name="key_02" id="key_02">
-                <input type=button value="{{ $array[$key1]->product_id }}" name=id >
+    <table >
+        
+            <th>商品id:</th>
+            <th></th>
+            <th>商品名稱:</th>
+            <th></th>
+            <th>商品價格:</th>
+            <th>刪除商品:</th>
+            <th>購買數量:</th>
+        
+        @if(Session::has('product_array'))
+        
+            @foreach (Session::get('product_array') as $key_01 => $array)
+            <tr>
+                @foreach($array as $key_02 => $value) 
+                <input type=hidden value="{!! $key_01!!}" name="key_01" id="key_01">
+                <input type=hidden value="{!! $key_02 !!}" name="key_02" id="key_02">
+                
+                {{--  <input type=hidden value="{{ $array[$key_02]->product_id }}" name=id >--}}
+                    <td>    {{--  key:{{ $key_01 }}key1:{{ $key_02 }}商品id: --}} {{ $array[$key_02]->product_id }}     </td>
+                    <td></td>
+                    <td>    {{-- key:{{ $key_01 }}key1:{{ $key_02 }}商品名稱: --}} {{ $array[$key_02]->product_name }}   </td>
+                    <td></td>
+                    <td>   {{-- key:{{ $key_01 }}key1:{{ $key_02 }}商品價格: --}} {{ $array[$key_02]->product_price }}  </td>
+                    <td><input type=button value=delete  onclick="window.location='{{ route('product_delete', [$key_01])}}'"></td>
+                @endforeach  
+                @foreach(Session::get('buynumber') as $key => $buynumber)
+                @if($key_01 == $key)
+                <td>{{-- key:$key --}}{{ $buynumber }}</td>
+                @endif
+                @endforeach
+            </tr> 
             @endforeach
-        @endforeach
-    @endif
-
-{{ var_dump(Session::get('product_array')) }}
-k{{ var_dump(Session::get('k')) }}
-k1{{ var_dump(Session::get('k1')) }}
+        @endif
+      </table>        
+    
+{{-- var_dump(Session::get('product_array')) }}
+k{{ var_dump(Session::get('k')) --}}
+{{-- var_dump(Session::get('k1')) }}
 {{--  
 @if (Session::has('test001'))
     {{ Session::get('test001') }}
 @endif    
 --}}
-{{--  
-    @foreach(Session::get('buynumber') as $key => $buynumber)
-        key:{{ $key }}購買數量:{{ $buynumber }}
-    @endforeach
---}}
+
 {{--  
         @foreach (Storage::get('product') as $product))
             {{ $product->product_id }}
@@ -69,10 +86,9 @@ k1{{ var_dump(Session::get('k1')) }}
     {{-- var_dump(Storage::get('product')) --}}
     {{--  $data_1=Storage::get('product')--}}
     {{--  
-    <?php   //$data_2 = JSON.parse( $data_1 );
-    ?>
+
     --}}
-    <div class="details" style="display:none">{{-- $data = json_decode(Storage::get('product'), true)--}}</div>
+    {{-- $data = json_decode(Storage::get('product'), true)--}}
       
     {{-- var_dump($data2) --}}
 {{--  
