@@ -133,3 +133,8 @@ Route::get('product_delete/{key_01}}', [
     'as'  => 'product_delete',
     'uses' => 'Customer\CustomerController@deletecart'
 ]);
+
+Route::post('product_number_change/', [
+    'as'  => 'product_number_change',
+    'uses' => 'Customer\CustomerController@changecart'
+]);

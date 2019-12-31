@@ -68,8 +68,8 @@ class CustomerController extends Controller
 
     public function putincart()
     {
-        $total_number=0;
-        $total_price=0;
+        $total_number='0';
+        $total_price='0';
         $buynumber = Input::get('buynumber');
         $product_id = Input::get('product_id');
         $product = DB::table('product')
@@ -90,24 +90,37 @@ class CustomerController extends Controller
         
         //Storage::put('product',  $rooms); 
 
-        Session::put('k', '777');
-        Session::put('k1', '777');
+        //Session::put('k', '777');
+        //Session::put('k1', '777');
 
         Session::push('product_array', $product);
         Session::push('buynumber', $buynumber);
 
         foreach (Session::get('product_array') as $key_01 => $array){
             foreach($array as $key_02 => $value) {
-                ($product_price=$array[$key_02]->product_price);
+                $product_price = $array[$key_02]->product_price;
+                //$value;
+                
+                foreach(Session::get('buynumber') as $key => $buynumber)
+                if($key_01 == $key){
+                    $buynumbers=(int)$buynumber;
+                }
+
             }
-            foreach(Session::get('buynumber') as $key => $buynumber)
-            if($key_01 == $key){
-                $buynumber;
-            }
-            $subtotal = $product_price*$buynumber;
-            $total_number += $buynumber;
-            $total_price += $subtotal;
+
         }
+        $subtotal = $product_price * $buynumbers;
+        Session::push('subtotal', $subtotal);
+        Session::push('product_price', $product_price);
+
+        //$subtotal =[];
+        //$subtotal = $product_price * $buynumber;
+        //Session::push('subtotal', $subtotal);
+        $total_number = Session::get('total_number') + $buynumbers;
+        Session::put('total_number', $total_number);
+        $total_price = Session::get('total_price') + $subtotal;
+        Session::put('total_price', $total_price);
+
         //$files =   Storage::allFiles($dir);
         //Storage::delete('product');               
         //Session::push('product_array', $product);                
@@ -123,141 +136,14 @@ class CustomerController extends Controller
         //Session::put('cart', $product);
         //Session::put('buynumbers', array($buynumber));
         return  View('shop/cart')
-                ->with('product_json',$product_json)
-                ->with('product',$product)
+                //->with('product_json',$product_json)
+                //->with('product',$product)
+                //->with('subtotal',$subtotal)
+                //->with('total_number',$total_number)
+                //->with('total_price',$total_price)
                 //->with('test',$test)
                 ;
-        //$product_array["buynumber"] = $buynumber;
-        //Session::put('cart', $product_array);
-        //$products = $product->put('buynumber', $buynumber);
-        //Session::put('cart', $products);
-        
-        //$product_json = json_encode($product_array, JSON_UNESCAPED_UNICODE);
-        //$product_decode = json_decode($product_json, JSON_UNESCAPED_UNICODE);
-        //Session::put('cart', $product_json);
-        //Session::get('cart');
-
-            //->with('product_array', $product_array)
-            //->with('product', $product)
-            //->with('product_json', $product_json)
-            //->with('product_decode', $product_decode)
-            //work
-            
-/*
-        $product = DB::table('product')->where('product_id',48)->get();
-        $product[0]->buynumber = 5;
-        //$product_array = array_merge($product[0],['buynumber' => 5]);
-        $product_array = $product[0];
-        Session::push('cart', $product_array);
-
-        return  View('shop/cart');
-*/
-        /*
-        $number = array('buynumber'.$buynumber);                
-        $number = array('buynumber',$buynumber);
-        array_push($product, $number);
-        */
-        //"product_number":400,+
-        //$number = attributes['buynumber'] == $buynumber;
-        /*
-        $products = $product->map(function ($product) use ($buynumber) {
-            $product['buynumber'] -> $buynumber;
-            return $product;
-        });
-        */
-
-
-        
-
-        /*
-        $products = $product->transform(function ($item, $key) {
-            $item['buynumber'] = $buynumber;
-            return $item;
-        });
-        */
-        //$buy_number = array('buynumber' => $buynumber);
-        
-        //(work)
-        
-/*
-        array_map(function($product) use($buy_number) {
-        return array_merge($product, $buy_number);}, 
-        $product_array);
-*/
-        
-        
-        //$merge = array_merge($product_array, $buy_number);
-        //$product_array = array_merge($product[0],['buynumber' => 5]);
-        //array_push($product_array, $product_array['buynumber']=$buynumber);
-        //$product_array['buynumber'] = $buynumber;
-        //(work)
-        //$buy_number = array('buynumber' => $buynumber);
-        //array_push($product_array, $buy_number);
-        //$product_array = array_add(['buynumber' => $buynumber]);
-        //$product->push('buynumber', '$buynumber');
-        //$product_json = $product_array->tojson(JSON_UNESCAPED_UNICODE);
-        //$product_json =json_encode($product_array);
-//$product_json = $product_array->toget()->tojson(JSON_UNESCAPED_UNICODE);
-
-
-        //$number_json = $number->tojson();
-        /*
-        $products = $product->get()->tojson(JSON_UNESCAPED_UNICODE);
-        $products_02 = $products;
-        Session::push('cart', $products_02);
-        $buynumbers = $buynumber;
-        */
-        /*
-        $i = 0;
-        foreach ($product_array as  $item){
-             $item->product_id 
-             $item->product_name 
-             $item->product_number }}
-             $item->buynumber = $buynumber[$i] 
-        }
-        */
-        
-        //Session::push('cart', $product_array);
-        //$test = collect([$products]);
-        //session::push('test', $products);
-        //$value = session('key','default');
-        //session()->put('test', 'zzzzz');
-        //session()->push('user.teams', 'developers');                
-        //session(['product_name'  =>  $buyproduct->product_name]);
-        //session()->put('product_name', $products->product_name);
-        /*
-        $test= 
-        [
-            'product_id'    =>  $product_id,
-            'product_name'  =>  $products->get('product_name'),
-            'product_price' =>  $products->get('product_price'),
-            'product_number'=>  $products->get('product_name')
-        ]; 
-        */
-        //session()->push('product', $product);
-        //return view('shop/cart')
-         //       ->with('cart_session', $cart_session);
-
-        //return  View('shop/cart')
-                    //->with('product_array',$product_array)
-                    //->with('product_json',$product_json)
-                    //->with('merge',$merge)
-                    //->with('product',$product)
-                    //->with('buynumber',$buynumber)
-                    //->with('products',$products)
-        /*
-                ->with('products',$products)
-                ->with('products_02',$products_02)
-                //->with('buynumber',$buynumbers)
-                ->with('product_id',$product_id)
-                ->with('product',$product)
-        */
-                //->with('number_json',$number_json)
-                //->with('value',$value)
-                //->with('test',$test)
-                //->with('product',$product)
-                //->with('product_name',$product_name)
-                //->with('cart_session',$cart_session)
+    
                 
     }
     public function deletecart($key_01){
@@ -269,46 +155,52 @@ class CustomerController extends Controller
         $id = Input::get('id');
         Session::forget('product_array.'.$k);
         Session::forget('buynumber.'.$k);
+
+        Session::forget('subtotal.'.$k);
+        Session::forget('product_price.'.$k);
         Session::put('k', $k);
-        //Session::put('k1', $k1);
-        //unset($product_array[$k]);
-        //Session::flush();
-        //session::forget('product_array');
-        //Session::push('product_array', $product_array);
+        $total_number=0;
+        $total_price=0;
+        Session::forget('total_number');
+        Session::forget('total_price');
 
-        //$test = '888888';
-        //unset($test);
-/*
-        session::put('test001','888888');
-        $test001 = session::get('test001');
-        unset($test001);
-        if  (empty($test001)){
-            session::put('test001',$test001);
-        }
-*/        
-/*
-        foreach ($product_array as $key => $array){
-            foreach($array as $key1 => $value) {
-                //if($k == $key || $k1 == $key1){
-                if($id ==   ($array[$key1]->product_id)){
-                    unset($product_array[$key1]);
-
-                    //unset($product_array[$k][$k1]);   not working
-                    //Session::pull('product_array',$product_array);
-                    Session::flush();
-                    Session::push('product_array', $product_array);
+        foreach (Session::get('product_array') as $key_01 => $array){
+            foreach($array as $key_02 => $value) {
+                $product_price = $array[$key_02]->product_price;
+                //$value;
+                
+                foreach(Session::get('buynumber') as $key => $buynumber)
+                if($key_01 == $key){
+                    $sub_number = (int)$buynumber;
+                    //$total_number = Session::get('total_number') + $buynumbers;
+                    
                 }
+                
             }
+            $total_number = $total_number + $sub_number;
+            $subtotal = $product_price * $sub_number;
+            $total_price = $total_price + $subtotal;
         }
-*/
 
-        //Session::flush();
-        //Session::push('product_array', $array);
+
+        Session::put('total_number', $total_number);
+        //$total_price = Session::get('total_price') + $subtotal;
+        Session::put('total_price', $total_price);
+
         return  View('shop/cart')
-            //->with('k',$k)
-            //->with('k1',$k1)
-            //->with('test',$test)
-        
+        //->with('k',$k)
+        //->with('k1',$k1)
+        //->with('test',$test)
+    
         ;
     }
+
+    public function changecart(Request $request){
+        $buynumber = $request->get('buynumber'); 
+
+        return View('shop/test')
+            ->with('buynumber',$buynumber)
+        ;
+    }
+
 }

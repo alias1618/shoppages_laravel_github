@@ -15,6 +15,7 @@
     {{ $object->product_name }}
     {{ $object->product_price }}
     <input id="product_id" type="hidden" name="product_id" value="{{ $object->product_id }}">
+    
     <select name="buynumber" id="buynumber">
         @foreach ($max_buynumber as $buynumber)            
             <option value="{{ $buynumber }}">{{ $buynumber }}</option>

@@ -8,6 +8,7 @@
 </head>
 <body>
     <button type="button" class="btn btn-default" onclick="window.location='{{ route('index')}}'">index</button>
+
 {{-- dd(Session::get('cart')) --}}
 {{--  
     @foreach (Session::get('cart') as $item)
@@ -47,18 +48,101 @@
                     <td></td>
                     <td>   {{-- key:{{ $key_01 }}key1:{{ $key_02 }}商品價格: --}} {{ $array[$key_02]->product_price }}  </td>
                     <td><input type=button value=delete  onclick="window.location='{{ route('product_delete', [$key_01])}}'"></td>
-                @endforeach  
-                @foreach(Session::get('buynumber') as $key => $buynumber)
-                @if($key_01 == $key)
-                <td>{{-- key:$key --}}{{ $buynumber }}</td>
-                @endif
                 @endforeach
-            </tr> 
+                <form method="post" action="{{ route('product_number_change') }}">
+                    {{ csrf_field() }}
+                <td>
+                    <select name="buynumber" id="buynumber">  
+                        @foreach(Session::get('buynumber') as $key_02 => $buynumber)
+                            @if($key_01 == $key_02)
+                            {{--  <option value="0">0</option>--}}
+                            <option value="1" @if($buynumber == "1") selected="selected"@endif>1</option>
+                            <option value="2" @if($buynumber == "2") selected="selected"@endif>2</option>
+                            <option value="3" @if($buynumber == "3") selected="selected"@endif>3</option>
+                            <option value="4" @if($buynumber == "4") selected="selected"@endif>4</option>
+                            <option value="5" @if($buynumber == "5") selected="selected"@endif>5</option>
+                            {{--  <option value="{{ $buynumber }}">{{ $buynumber }}</option>--}}
+                            {{-- <td>{{ --  key:$key {{ $buynumber }}</td> --}}
+                            @endif
+                        @endforeach
+                    </select>
+                </td>
+
+                <td>
+    {{--  
+                    @if ( !empty($subtotal))
+                        {{ var_dump($subtotal) }} 
+                    @endif
+     --}}
+                @if(Session::has('subtotal'))           
+                    @foreach (Session::get('subtotal') as $key_03 => $sub)
+                        @if($key_01 == $key_03)
+                            小計{{ $sub }}
+                        @endif
+                    @endforeach
+
+                    {{--商品價格 var_dump(Session::get('product_price')) --}}
+                    {{--    
+                    @foreach(Session::get('product_price') as $key => $price)
+                        {{ $price->product_price}}
+                    @endforeach
+                    --}}
+                    
+                    {{--購買數量 var_dump(Session::get('buynumber')) --}}
+                    {{-- 
+                    @foreach( Session::get('buynumber') as $key =>$buynumber) 
+                        {{ $buynumber }}
+                    @endforeach
+                     --}}
+                @endif                    
+                </td>
+            </tr>
+
             @endforeach
         @endif
+        <tr>
+            <td>合計</td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            
+            <td>
+                @if(Session::has('total_number'))           
+                    {{ (Session::get('total_number'))}} 
+                    
+                @endif  
+                {{--  @if (!empty($total_number)) {{ $total_number }} @endif--}}
+            </td>
+            <td></td>
+            <td>
+                @if(Session::has('total_price'))  
+                    {{ (Session::get('total_price')) }}  
+{{--  
+                    @foreach (Session::get('total_price') as $key => $price)
+                        {{ $price }}
+                    @endforeach
+--}}
+                @endif  
+                {{--  @if (!empty($total_price)){{ $total_price }}@endif--}}
+            </td>
+            {{--  
+            @foreach ($total_number as $tn)
+                {{ $tn }}
+            @endforeach
+            @foreach ($total_price as $tp)
+                {{ $tp }}
+            @endforeach
+            --}}
+        </tr> 
       </table>        
-    
-{{-- var_dump(Session::get('product_array')) }}
+      {{--  <input type=button value=  onclick="window.location='{{ route('product_delete', [$key_01])}}'">change number--}}
+      {{--  <button type="button" class="btn btn-default" onclick="window.location='{{ route('product_number_change')}}'">改變商品數量</button>--}}
+
+      <button>改變商品數量</button>
+    </form>
+      {{-- var_dump(Session::get('product_array')) }}
 k{{ var_dump(Session::get('k')) --}}
 {{-- var_dump(Session::get('k1')) }}
 {{--  
