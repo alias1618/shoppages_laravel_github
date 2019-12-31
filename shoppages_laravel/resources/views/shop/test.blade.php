@@ -7,6 +7,8 @@
     <title>Document</title>
 </head>
 <body>
-    {{ var_dump($buynumber) }}
+    {{--  {{ var_dump($buynumber) }}--}}
+    {{ var_dump(Session::get('buynumber')) }}
+    {{ var_dump(Session::get('subtotal')) }}
 </body>
 </html>

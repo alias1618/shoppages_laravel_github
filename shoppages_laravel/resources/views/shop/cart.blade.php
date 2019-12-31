@@ -52,7 +52,7 @@
                 <form method="post" action="{{ route('product_number_change') }}">
                     {{ csrf_field() }}
                 <td>
-                    <select name="buynumber" id="buynumber">  
+                    <select name="buynumber[]" id="buynumber">  
                         @foreach(Session::get('buynumber') as $key_02 => $buynumber)
                             @if($key_01 == $key_02)
                             {{--  <option value="0">0</option>--}}
@@ -76,8 +76,10 @@
      --}}
                 @if(Session::has('subtotal'))           
                     @foreach (Session::get('subtotal') as $key_03 => $sub)
-                        @if($key_01 == $key_03)
-                            小計{{ $sub }}
+                        @if(!empty($sub))
+                            @if($key_01 == $key_03 )
+                                小計{{ $sub }}
+                            @endif
                         @endif
                     @endforeach
 
@@ -142,6 +144,7 @@
 
       <button>改變商品數量</button>
     </form>
+    <td><input type=button value="結帳"  onclick="window.location='{{ route('check_infor')}}'"></td>
       {{-- var_dump(Session::get('product_array')) }}
 k{{ var_dump(Session::get('k')) --}}
 {{-- var_dump(Session::get('k1')) }}

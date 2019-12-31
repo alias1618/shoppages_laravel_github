@@ -138,3 +138,14 @@ Route::post('product_number_change/', [
     'as'  => 'product_number_change',
     'uses' => 'Customer\CustomerController@changecart'
 ]);
+
+
+Route::get('check_infor', function () {
+    
+    return view('shop/information');
+})->name('check_infor');
+
+Route::post('check_detail', [
+    'as'  => 'check_detail',
+    'uses' => 'Customer\CustomerController@check_detail'
+]);
