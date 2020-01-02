@@ -147,5 +147,16 @@ Route::get('check_infor', function () {
 
 Route::post('check_detail', [
     'as'  => 'check_detail',
-    'uses' => 'Customer\CustomerController@check_detail'
+    'uses' => 'Customer\CustomerController@checkdetail'
 ]);
+
+Route::post('buy_detail', [
+    'as'  => 'buy_detail',
+    'uses' => 'Customer\CustomerController@buydetail'
+]);
+
+
+Route::get('test', function () {
+    
+    return view('shop/test');
+})->name('test');

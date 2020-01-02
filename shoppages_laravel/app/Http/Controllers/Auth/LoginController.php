@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Redirect;
 //use Illuminate\Support\Facades\Hash;
 use Hash;
-
+use Session;
 class LoginController extends Controller
 {
     /*
@@ -77,7 +77,9 @@ class LoginController extends Controller
 
             if(Hash::check($type_password, $user->user_password)){
                 echo "success";
+                Session::put('user_id', $user->user_id);
                 return redirect('index');
+                //return View('shop/test');
             }
             else{
                 echo 'still not'.'<br>';

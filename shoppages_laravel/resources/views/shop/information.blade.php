@@ -93,7 +93,7 @@
   </table>
   <table>
    
-    <form class="form-horizontal" method="POST" action="{{ route('check_detail') }}">
+    <form class="form-horizontal" method="post" action="{{ route('check_detail') }}">
         {{ csrf_field() }}
         <div class="form-group{{ $errors->has('ship_name') ? ' has-error' : '' }}">
             <tr><p>收件人姓名 <input type=text value="" id="ship_name" name="ship_name"></p></tr>
@@ -104,7 +104,7 @@
         <div class="form-group{{ $errors->has('ship_tel') ? ' has-error' : '' }}">
             <tr><p>收件人電話 <input type=text value="" id="ship_tel" name="ship_tel"></p></tr>
         </div>
-        <button>結帳123</button>
+        <button type="submit">結帳</button>
     </form>    
   
   </table>

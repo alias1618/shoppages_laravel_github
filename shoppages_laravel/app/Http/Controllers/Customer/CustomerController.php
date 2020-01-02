@@ -268,7 +268,7 @@ class CustomerController extends Controller
 
 
 
-    public function check_detail(Request $request){
+    public function checkdetail(Request $request){
 
         $ship_name = input::get('ship_name');
         $ship_add = input::get('ship_add');
@@ -286,10 +286,87 @@ class CustomerController extends Controller
                             ->withInput();
         }
 
-        return View('check_detail')
+        return View('shop/check_detail')
             ->with('ship_name',$ship_name)
             ->with('ship_add', $ship_add)
             ->with('ship_tel' ,$ship_tel)
+        ;
+    }
+
+    public function buydetail(Request $request){
+
+        $ship_name = $request->input('ship_name');
+        $ship_add = $request->input('ship_add');
+        $ship_tel = $request->input('ship_tel');
+        $user_id = Session::get('user_id');
+
+        $sub_number=0;
+        $total_number=0;
+        $total_price=0;
+
+        //session::get('user_id');
+        
+
+        date_default_timezone_set("Asia/Taipei");
+        $time = (date("Y-m-d H:i:s"));
+
+        $input[] = [
+                    'buy_date'=>$time,
+                    'buy_name'=>$ship_name,
+                    'buy_add'=>$ship_add,
+                    'buy_phone'=>$ship_tel,
+                    'buy_money'=>(Session::get('total_price')),
+                    'ship_status_id'=>'1',
+                    'user_id'=> $user_id,
+                    //'rememberToken'=>request()->_token
+        ];
+
+        $res = DB::table('buy')->insert($input);
+
+        $result = DB::table('buy')->where('user_id', '=',  $user_id)
+                                ->where('buy_date', '=', $time)
+                                ->pluck('buy_id')
+                                //->get()
+                                ;
+
+        //$buyid = $result;
+
+        foreach (Session::get('product_array') as $key_01 => $array){
+        
+            foreach($array as $key_02 => $value) {
+                $product_id = $array[$key_02]->product_id;   
+               
+                $product_name = $array[$key_02]->product_name;
+                
+                $product_price = $array[$key_02]->product_price; 
+                
+            }
+            foreach(Session::get('buynumber') as $key_02 => $buynumber){
+                if($key_01 == $key_02){
+                    $buynumber;
+
+                    $input_02[] = [ 'buy_id'=>$result[0],
+                    'product_price'=>$product_price,
+                    'product_name'=>$product_name,
+                    'buy_number'=>$buynumber,
+                    'product_id'=>$product_id,
+    
+                    ];
+                }
+                
+            }
+
+
+
+
+        }
+
+        DB::table('buy_detail')->insert($input_02);
+        Session::forget('product_array');
+        Session::forget('buynumber');
+        return redirect('index')
+                //->with('result',$result)
+                //->with('input_02',$input_02)         
         ;
     }
 

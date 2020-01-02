@@ -8,7 +8,8 @@
 </head>
 <body>
     {{--  {{ var_dump($buynumber) }}--}}
-    {{ var_dump(Session::get('buynumber')) }}
-    {{ var_dump(Session::get('subtotal')) }}
+    {{-- var_dump(Session::get('buynumber')) --}}
+    {{ var_dump($result) }}
+    {{ var_dump($input_02) }}
 </body>
 </html>

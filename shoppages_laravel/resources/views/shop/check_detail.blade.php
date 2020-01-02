@@ -28,8 +28,7 @@
                 <td></td>
                 <td>    {{ $array[$key_02]->product_price }}  </td>               
             @endforeach
-            <form method="post" action="{{ route('product_number_change') }}">
-                {{ csrf_field() }}
+            
             <td>
                     @foreach(Session::get('buynumber') as $key_02 => $buynumber)
                         @if($key_01 == $key_02)
@@ -79,14 +78,15 @@
   </table>
   <table>
    
-    <form class="form-horizontal" method="POST" action="{{ route('check_detail') }}">
+    <form class="form-horizontal" method="POST" action="{{ route('buy_detail') }}">
         {{ csrf_field() }}
-        <tr><p>收件人姓名 {{ $ship_name }} {{--  <input type=text value="" id="ship_name" name="ship_name">--}}</p></tr>
-        <tr><p>收件人地址 {{ $ship_add }} {{--  <input type=text value="" id="ship_add" name="ship_add">--}}</p></tr>
-        <tr><p>收件人電話 {{ $ship_tel }} {{--  <input type=text value="" id="ship_tel" name="ship_tel">--}}</p></tr>
+        <tr><p>收件人姓名 {{ $ship_name }}   <input type=hidden value={{ $ship_name }} id="ship_name" name="ship_name"></p></tr>
+        <tr><p>收件人地址 {{ $ship_add }}   <input type=hidden value={{ $ship_add }} id="ship_add" name="ship_add"></p></tr>
+        <tr><p>收件人電話 {{ $ship_tel }}   <input type=hidden value={{ $ship_tel }} id="ship_tel" name="ship_tel"></p></tr>
+        <button type="submit">結帳</button>
     </form>    
   
   </table>
-  <input type=button value="結帳"  onclick="window.location='{{ route('check_infor')}}'">
+  {{--  <input type=button value="結帳"  onclick="window.location='{{ route('check_infor')}}'">--}}
 </body>
 </html>
