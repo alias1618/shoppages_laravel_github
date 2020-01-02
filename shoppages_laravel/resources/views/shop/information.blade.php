@@ -98,10 +98,10 @@
         <div class="form-group{{ $errors->has('ship_name') ? ' has-error' : '' }}">
             <tr><p>收件人姓名 <input type=text value="" id="ship_name" name="ship_name"></p></tr>
         </div>
-        <div class="form-group{{ $errors->has('ship_name') ? ' has-error' : '' }}">
+        <div class="form-group{{ $errors->has('ship_add') ? ' has-error' : '' }}">
             <tr><p>收件人地址 <input type=text value="" id="ship_add" name="ship_add"></p></tr>
         </div>
-        <div class="form-group{{ $errors->has('ship_name') ? ' has-error' : '' }}">
+        <div class="form-group{{ $errors->has('ship_tel') ? ' has-error' : '' }}">
             <tr><p>收件人電話 <input type=text value="" id="ship_tel" name="ship_tel"></p></tr>
         </div>
         <button>結帳123</button>
