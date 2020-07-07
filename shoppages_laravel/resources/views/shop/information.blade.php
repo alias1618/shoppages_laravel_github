@@ -24,14 +24,11 @@
             @foreach($array as $key_02 => $value) 
             <input type=hidden value="{!! $key_01!!}" name="key_01" id="key_01">
             <input type=hidden value="{!! $key_02 !!}" name="key_02" id="key_02">
-            
-            
                 <td>    {{ $array[$key_02]->product_id }}     </td>
                 <td></td>
                 <td>     {{ $array[$key_02]->product_name }}   </td>
                 <td></td>
-                <td>    {{ $array[$key_02]->product_price }}  </td>
-                
+                <td>    {{ $array[$key_02]->product_price }}  </td>    
             @endforeach
             <td>
                 {{--  <select name="buynumber[]" id="buynumber">  --}}

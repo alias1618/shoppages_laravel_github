@@ -46,15 +46,9 @@ class LoginController extends Controller
 
     public function login()
     {
-        //$input = request()->all();
+
         $type_account = Input::get('user_account');
         $type_password = Input::get('user_password');
-        /*
-        $rule =[
-            'user_account' => ('required'),
-            'user_password' => ('password|required'),
-        ];
-        */
         $validator = Validator::make(request()->all(), [
             'user_account'  => 'required|min:4',
             'user_password' => 'required'
@@ -65,11 +59,7 @@ class LoginController extends Controller
                             ->withErrors($validator)
                             ->withInput();
         }
-/*
-        if (!empty($user = DB::table('users')
-        ->where('user_account', '=', $type_account)
-        ->first())){
-*/
+
 
         if ($user = DB::table('users')
             ->where('user_account', '=', $type_account)
@@ -89,6 +79,10 @@ class LoginController extends Controller
                 echo '$user->user_password'.'<br>'.$user->user_password.'<br>';
                 echo '<br>';
                 echo 'Hash'.'<br>'.Hash::make($type_password);
+                        //輸入的資料不符合
+                return Redirect::to('login')
+                    ->withErrors($validator)
+                    ->withInput(Input::except('password'));
                 //return 'Hash'.$user && Hash::check(Input::get('user_password'), $user->user_password);
                 //echo 'Hash'.$user && Hash::check(Input::get('user_password'), $user->user_password);
                 //printf ('$user'.$user);

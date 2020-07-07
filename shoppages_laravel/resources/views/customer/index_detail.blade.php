@@ -14,7 +14,7 @@
 {{-- <img src="{{ asset('uploads/'.$object->product_photo_name)}}" width=15%/> --}}
     {{ $object->product_name }}
     {{ $object->product_price }}
-    <input id="product_id" type="hidden" name="product_id" value="{{ $object->product_id }}">
+    <input id="product_id" type="hidden" name="produc`t_id" value="{{ $object->product_id }}">
     
     <select name="buynumber" id="buynumber">
         @foreach ($max_buynumber as $buynumber)            

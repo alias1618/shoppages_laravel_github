@@ -10,6 +10,6 @@
     {{--  {{ var_dump($buynumber) }}--}}
     {{-- var_dump(Session::get('buynumber')) --}}
     {{ var_dump($result) }}
-    {{ var_dump($input_02) }}
+    {{-- var_dump($input_02) --}}
 </body>
 </html>

@@ -325,7 +325,7 @@ class CustomerController extends Controller
 
         $result = DB::table('buy')->where('user_id', '=',  $user_id)
                                 ->where('buy_date', '=', $time)
-                                ->pluck('buy_id')
+                                ->value('buy_id')
                                 //->get()
                                 ;
 
@@ -345,7 +345,7 @@ class CustomerController extends Controller
                 if($key_01 == $key_02){
                     $buynumber;
 
-                    $input_02[] = [ 'buy_id'=>$result[0],
+                    $input_02[] = [ 'buy_id'=>$result,
                     'product_price'=>$product_price,
                     'product_name'=>$product_name,
                     'buy_number'=>$buynumber,
@@ -364,6 +364,11 @@ class CustomerController extends Controller
         DB::table('buy_detail')->insert($input_02);
         Session::forget('product_array');
         Session::forget('buynumber');
+        Session::forget('subtotal');
+        Session::forget('total_number');
+        Session::forget('total_price');
+
+        //return view('shop/test')
         return redirect('index')
                 //->with('result',$result)
                 //->with('input_02',$input_02)         
